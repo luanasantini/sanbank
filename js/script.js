@@ -4,7 +4,22 @@ import ehMaiorDeIdade from "./valida-idade.js";
 const camposDoFormulario = document.querySelectorAll("[required]")
 const formulario = document.querySelector("[data-formulario]")
 
+formulario.addEventListener("submit", (evento) => {
+    evento.preventDefault(); //o evento padrão do submit é fazer reload, precisamos evitar isso
 
+    const listaRespostas = { //evento.target.elements["nome"].value é usado para obter o valor do campo com o nome "nome" dentro do formulário. Da mesma forma, os outros campos são acessados usando evento.target.elements seguido pelo nome do campo desejado.
+        "nome": evento.target.elements["nome"].value,
+        "email": evento.target.elements["email"].value,
+        "rg": evento.target.elements["rg"].value,
+        "cpf": evento.target.elements["cpf"].value,
+        "aniversario": evento.target.elements["aniversario"].value,
+    }
+
+    localStorage.setItem("cadastro", JSON.stringify(listaRespostas)); //o primeiro parametro é a chave, o "nome" do item, e o segundo parametro é o item que está sendo enviado. o JSON.stringify é para converter o objeto em JSON pra conseguir deixar salvo.
+
+    window.location.href = './abrir-conta-form-2.html'; //fazer o redirecionamento pra próxima pagina
+
+})
 
 camposDoFormulario.forEach((campo) => {
     campo.addEventListener("blur", () => verificaCampo(campo));
